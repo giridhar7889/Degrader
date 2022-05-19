@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" type="text/css" href="../src/css/index.css"> -->
+    <!-- <script src="../src/js/index.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <title>Grading System Dapp</title>
+
+
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+            transition: background-color .5s;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow: auto;
+            padding-top: 20px;
+        }
+
+        .sidenav h2 {
+            padding: 16px;
+            padding-bottom: 40px;
+            text-decoration: none;
+            text-align: center;
+            font-size: 30px;
+            color: white;
+            display: block;
+        }
+
+        .sidenav a {
+            padding: 16px;
+            text-decoration: none;
+            text-align: center;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+        }
+
+        .sidenav a.active {
+            outline: none;
+            background-color: #DC143C;
+            font-size: 25px;
+            color: white;
+        }
+
+        .sidenav a:hover:not(.active) {
+            background-color: #555;
+            color: white;
+        }
+
+        .sidebar {
+            padding-top: 20px;
+            width: 400px;
+            background-color: #1D2731;
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: 1;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .sidebar h2 {
+            padding: 16px;
+            padding-bottom: 40px;
+            text-decoration: none;
+            text-align: center;
+            font-size: 30px;
+            color: white;
+            display: block;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #328CC1;
+            padding: 16px;
+            font-size: 20px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .sidebar a.active {
+            outline: none;
+            background-color: #D9B310;
+            font-size: 25px;
+            color: white;
+        }
+
+        .sidebar a:hover:not(.active) {
+            background-color: #0B3C5D;
+            color: white;
+        }
+
+        .main {
+            margin-left: 250px;
+            /* Same as the width of the sidenav */
+            margin-right: 400px;
+            /* Same as the width of the sidebar */
+            font-size: 20px;
+            /* Increased text to enable scrolling */
+            padding: 1px 16px;
+            padding-top: 60px;
+        }
+
+        #innersection {
+            margin: 0 auto;
+            width: 50%;
+        }
+
+        .FunctionForm .resultDiv {
+            padding-top: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidenav">
+        <h2>Grading DApp</h2>
+        <a href="javascript:void(0)" class="Admin">Admin</a>
+        <a href="javascript:void(0)" class="Professor">Professor</a>
+        <a href="javascript:void(0)" class="TA">TA</a>
+        <a href="javascript:void(0)" class="Student">Student</a>
+    </div>
+
+
+    <div id="main" class="main">
+        <section id="innersection">
+            <div id="addInstructorForm" class="FunctionForm collapse">
+                <form class="formClass" onsubmit="App.addInstructorFun(); return false;">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">List of addresses of Instructors</label>
+                        <input class="form-control" id="addInstructorInp0" placeholder="address1, address2">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+
+            <div id="getInstructorsListForm" class="FunctionForm collapse">
+                <form class="formClass" onsubmit="App.getInstructorsListFun(); return false;">
+                    <p>Get the List of Addresses of Instructors</p>
+                    <button type="submit" class="btn btn-primary">Get</button>
+                    <div class="resultDiv form-group">
+                        <label for="exampleFormControlTextarea1">Instructors List</label>
+                        <textarea class="resultText form-control" id="getInstructorsListResult" rows="5"
+                            disabled="disabled"></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div id="addCourseForm" class="FunctionForm collapse">
+                <form class="formClass" onsubmit="App.addCourseFun(); return false;">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Course ID</label>
+                        <input class="form-control" id="addCourseInp0" placeholder="EE 465">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Course name</label>
+                        <input class="form-control" id="addCourseInp1" placeholder="blockchain">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Roll list of enrolled students</label>
+                        <input class="form-control" id="addCourseInp2" placeholder="Roll.No1, Roll.No2">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">List of addresses of Students</label>
+                        <input class="form-control" id="addCourseInp3" placeholder="address1, address2">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">List of addresses of TAs</label>
+                        <input class="form-control" id="addCourseInp4" placeholder="address1, address2">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+
+            <div id="addExamForm" class="FunctionForm collapse">
+                <form class="formClass" onsubmit="App.addExamFun(); return false;">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Course ID</label>
+                        <input class="form-control" id="addExamInp0" placeholder="EE 465">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Exam type</label>
+                        <input class="form-control" id="addExamInp1" placeholder="midsem">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Total marks</label>
+                        <input class="form-control" id="addExamInp2" placeholder="15">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Roll list of students</label>
+                        <input class="form-control" id="addExamInp3" placeholder="Roll.No1, Roll.No2">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Marks list</label>
+                        <input class="form-control" id="addExamInp4" placeholder="marks1, marks2">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+
+            <div id="calculateGradesForm" class="FunctionForm collapse">
+                <form class="formClass" onsubmit="App.calculateGradesFun(); return false;">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Course ID</label>
+                        <input class="form-control" id="calculateGradesInp0" placeholder="EE 465">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">List of Weightages</label>
+                        <input class="form-control" id="calculateGradesInp1" placeholder="10, 30, 10, 50">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Grade cut-off</label>
+                        <input class="form-control" id="calculateGradesInp2" placeholder="85, 75, 65, 55, 45, 35, 25">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Calculate</button>
+                </form>
+            </div>
+
+            <div id="updateMarksForm" class="FunctionForm collapse">
+                <form class="formClass" onsubmit="App.updateMarksFun(); return false;">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Course ID</label>
+                        <input class="form-control" id="updateMarksInp0" placeholder="EE 465">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Exam type</label>
+                        <input class="form-control" id="updateMarksInp1" placeholder="midsem">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Roll list of students</label>
+                        <input class="form-control" id="updateMarksInp2" placeholder="Roll.No1, Roll.No2">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Marks list</label>
+                        <input class="form-control" id="updateMarksInp3" placeholder="marks1, marks2">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+
+            <div id="getProfExamMarksForm" class="FunctionForm collapse">
+                <form class="formClass" onsubmit="App.getProfExamMarksFun(); return false;">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Course ID</label>
+                        <input class="form-control" id="getProfExamMarksInp0" placeholder="EE 465">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Exam type</label>
+                        <input class="form-control" id="getProfExamMarksInp1" placeholder="midsem">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Get</button>
+                    <div class="resultDiv form-group">
+                        <label for="exampleFormControlTextarea1">Score Sheet for the exam</label>
+                        <textarea class="resultText form-control" id="getProfExamMarksResult" rows="5"
+                            disabled="disabled"></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div id="getProfExamWeightagesForm" class="FunctionForm collapse">
+                <form class="formClass" onsubmit="App.getProfExamWeightagesFun(); return false;">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Course ID</label>
+                        <input class="form-control" id="getProfExamWeightagesInp0" placeholder="EE 465">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Get</button>
+                    <div class="resultDiv form-group">
+                        <label for="exampleFormControlTextarea1">Exam Details</label>
+                        <textarea class="resultText form-control" id="getProfExamWeightagesResult" rows="5"
+                            disabled="disabled"></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div id="getProfMarksGradesForm" class="FunctionForm collapse">
+                <form class="formClass" onsubmit="App.getProfMarksGradesFun(); return false;">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Course ID</label>
+                        <input class="form-control" id="getProfMarksGradesInp0" placeholder="EE 465">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Get</button>
+                    <div class="resultDiv form-group">
+                        <label for="exampleFormControlTextarea1">Student Grades Sheet</label>
+                        <textarea class="resultText form-control" id="getProfMarksGradesFormResult" rows="5"
+                            disabled="disabled"></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div id="getStudentMarksGradesForm" class="FunctionForm collapse">
+                <form class="formClass" onsubmit="App.getStudentMarksGradesFun(); return false;">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Course ID</label>
+                        <input class="form-control" id="getStudentMarksGradesInp0" placeholder="EE 465">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Roll Number</label>
+                        <input class="form-control" id="getStudentMarksGradesInp1" placeholder="Roll.No">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Get</button>
+                    <div class="resultDiv form-group">
+                        <label for="exampleFormControlTextarea1">Students Report</label>
+                        <textarea class="resultText form-control" id="getStudentMarksGradesResult" rows="5"
+                            disabled="disabled"></textarea>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+
+    <div>
+        <div id="AdminRight" class="rightSidebar collapse">
+            <div class="sidebar">
+                <h2>Admin Function Panel</h2>
+                <a href="javascript:void(0)" class="AdminFunction1">addInstructor</a>
+                <a href="javascript:void(0)" class="AdminFunction2">getInstructorsList</a>
+            </div>
+        </div>
+
+        <div id="ProfRight" class="rightSidebar collapse">
+            <div class="sidebar">
+                <h2>Prof Function Panel</h2>
+                <a href="javascript:void(0)" class="ProfFunction1">addCourse</a>
+                <a href="javascript:void(0)" class="ProfFunction2">addExam</a>
+                <a href="javascript:void(0)" class="ProfFunction3">calculateGrades</a>
+                <a href="javascript:void(0)" class="ProfFunction4">updateMarks</a>
+                <a href="javascript:void(0)" class="ProfFunction5">getProfExamMarks</a>
+                <a href="javascript:void(0)" class="ProfFunction6">getProfExamWeightages</a>
+                <a href="javascript:void(0)" class="ProfFunction7">getProfMarksGrades</a>
+            </div>
+        </div>
+
+        <div id="TARight" class="rightSidebar collapse">
+            <div class="sidebar">
+                <h2>TA Function Panel</h2>
+                <a href="javascript:void(0)" class="TAFunction1">addExam</a>
+                <a href="javascript:void(0)" class="TAFunction2">updateMarks</a>
+            </div>
+        </div>
+
+        <div id="StudentRight" class="rightSidebar collapse">
+            <div class="sidebar">
+                <h2>Student Function Panel</h2>
+                <a href="javascript:void(0)" class="StudentFunction1">getStudentMarksGrades</a>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="vendor/truffle-contract/dist/truffle-contract.js"></script>
+    <script src="app.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $(".Admin, .Professor, .TA, .Student").click(function () {
+                $(this).siblings('a').removeClass('active');
+                $(this).addClass('active');
+                $(".rightSidebar").collapse("hide");
+            });
+            $(".Admin").click(function () {
+                $("#AdminRight").collapse('show');
+            });
+            $(".Professor").click(function () {
+                $("#ProfRight").collapse('show');
+            });
+            $(".TA").click(function () {
+                $("#TARight").collapse('show');
+            });
+            $(".Student").click(function () {
+                $("#StudentRight").collapse('show');
+            });
+
+            $(".AdminFunction1, .AdminFunction2, .ProfFunction1, .ProfFunction2, .ProfFunction3, .ProfFunction4, .ProfFunction5, .ProfFunction6, .ProfFunction7, .TAFunction1, .TAFunction2, .StudentFunction1").click(function () {
+                $(".rightSidebar").children().children().removeClass('active');
+                $(this).addClass('active');
+                $(".FunctionForm").collapse("hide");
+                $('.resultText').text('');
+            });
+
+            $(".AdminFunction1").click(function () {
+                $("#addInstructorForm").collapse('show');
+            });
+            $(".AdminFunction2").click(function () {
+                $("#getInstructorsListForm").collapse('show');
+            });
+            $(".ProfFunction1").click(function () {
+                $("#addCourseForm").collapse('show');
+            });
+            $(".ProfFunction2").click(function () {
+                $("#addExamForm").collapse('show');
+            });
+            $(".ProfFunction3").click(function () {
+                $("#calculateGradesForm").collapse('show');
+            });
+            $(".ProfFunction4").click(function () {
+                $("#updateMarksForm").collapse('show');
+            });
+            $(".ProfFunction5").click(function () {
+                $("#getProfExamMarksForm").collapse('show');
+            });
+            $(".ProfFunction6").click(function () {
+                $("#getProfExamWeightagesForm").collapse('show');
+            });
+            $(".ProfFunction7").click(function () {
+                $("#getProfMarksGradesForm").collapse('show');
+            });
+            $(".TAFunction1").click(function () {
+                $("#addExamForm").collapse('show');
+            });
+            $(".TAFunction2").click(function () {
+                $("#updateMarksForm").collapse('show');
+            });
+            $(".StudentFunction1").click(function () {
+                $("#getStudentMarksGradesForm").collapse('show');
+            });
+        });
+    </script>
+
+</body>
+
+</html>
